@@ -1,0 +1,162 @@
+{
+  "countries": [
+    {
+      "id": 1,
+      "name": "Sri Lanka"
+    },
+    {
+      "id": 2,
+      "name": "Italy"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Rice & Curry"
+    },
+    {
+      "id": 2,
+      "name": "Kothu"
+    },
+    {
+      "id": 3,
+      "name": "Pasta"
+    }
+  ],
+  "foods": [
+    {
+      "id": 1768719516890,
+      "categoryId": "2",
+      "countryId": "1",
+      "name": "veg",
+      "price": "350"
+    },
+    {
+      "id": 1768719545624,
+      "categoryId": "1",
+      "countryId": "1",
+      "name": "fish",
+      "price": "350"
+    },
+    {
+      "id": 1768719571387,
+      "categoryId": "3",
+      "countryId": "2",
+      "name": "veg",
+      "price": "250"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1768724094426,
+      "items": [
+        {
+          "id": 1768719516890,
+          "categoryId": "2",
+          "countryId": "1",
+          "name": "veg",
+          "price": "350"
+        },
+        {
+          "id": 1768719516890,
+          "categoryId": "2",
+          "countryId": "1",
+          "name": "veg",
+          "price": "350"
+        }
+      ],
+      "total": 700,
+      "paymentMethod": "cash",
+      "tableId": null,
+      "userId": "user1",
+      "status": "served",
+      "timestamp": "2026-01-18T08:14:54.426Z"
+    },
+    {
+      "id": 1768724194037,
+      "items": [
+        {
+          "id": 1768719545624,
+          "categoryId": "1",
+          "countryId": "1",
+          "name": "fish",
+          "price": "350"
+        }
+      ],
+      "total": 350,
+      "paymentMethod": "card",
+      "tableId": null,
+      "userId": "user1",
+      "status": "served",
+      "timestamp": "2026-01-18T08:16:34.037Z"
+    },
+    {
+      "id": 1768727197015,
+      "items": [
+        {
+          "id": 1768719571387,
+          "categoryId": "3",
+          "countryId": "2",
+          "name": "veg",
+          "price": "250"
+        }
+      ],
+      "total": 250,
+      "paymentMethod": "card",
+      "tableId": null,
+      "userId": "admin",
+      "status": "served",
+      "timestamp": "2026-01-18T09:06:37.015Z"
+    },
+    {
+      "id": 1768727342835,
+      "items": [
+        {
+          "id": 1768719571387,
+          "categoryId": "3",
+          "countryId": "2",
+          "name": "veg",
+          "price": "250"
+        }
+      ],
+      "total": 250,
+      "paymentMethod": "card",
+      "tableId": null,
+      "userId": "admin",
+      "status": "served",
+      "timestamp": "2026-01-18T09:09:02.835Z"
+    },
+    {
+      "id": 1768727624972,
+      "items": [
+        {
+          "id": 1768719516890,
+          "categoryId": "2",
+          "countryId": "1",
+          "name": "veg",
+          "price": "350"
+        },
+        {
+          "id": 1768719516890,
+          "categoryId": "2",
+          "countryId": "1",
+          "name": "veg",
+          "price": "350"
+        },
+        {
+          "id": 1768719516890,
+          "categoryId": "2",
+          "countryId": "1",
+          "name": "veg",
+          "price": "350"
+        }
+      ],
+      "total": 1050,
+      "paymentMethod": "card",
+      "tableId": null,
+      "userId": "user2",
+      "status": "served",
+      "timestamp": "2026-01-18T09:13:44.972Z"
+    }
+  ]
+}

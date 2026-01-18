@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant SPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    🍽️ Food Restaurant
+  </header>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <a href="#" onclick="showSection('hero')">Home</a>
+    <a href="#" onclick="showSection('menu')">Menu</a>
+    <a href="#" onclick="showSection('dashboard')" id="navDashboard" class="hidden">Dashboard</a>
+    <a href="#" onclick="showSection('users-mgmt')" id="navUsers" class="hidden">Users</a>
+    <a href="#" onclick="showSection('contact')">Contact</a>
+    <a href="#" id="cartBtn" class="hidden" onclick="openCart()"
+      style="position:relative; background:var(--primary); color:#fff;">
+      🛒 Cart <span id="cartCount"
+        style="background:#fff; color:var(--primary); padding:2px 6px; border-radius:50%; font-size:0.7rem; margin-left:5px;">0</span>
+    </a>
+    <a href="#" onclick="openAuth()" id="navLogin">Login</a>
+    <a href="#" onclick="logout()" id="navLogout" class="hidden">Logout</a>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+  <section id="hero" class="section">
+    <h1>Delicious Food From Around the World</h1>
+    <p>Fresh • Tasty • Authentic</p>
+    <button onclick="showSection('menu')"
+      style="margin-top:20px; padding:10px 25px; font-size:1.1rem; background:var(--primary); color:#fff; border:none; border-radius:30px; cursor:pointer; box-shadow:0 4px 10px rgba(231, 76, 60, 0.3);">Order
+      Now 🍕</button>
+  </section>
+
+  <!-- ================= MENU ================= -->
+  <section id="menu" class="section hidden">
+    <h2>Our Menu</h2>
+    <div id="menuCards" class="card-container">
+      <!-- Food cards injected by JS -->
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section id="dashboard" class="section hidden">
+    <div class="dashboard-header">
+      <h2>Manager Dashboard</h2>
+      <!-- Role is now handled by Login -->
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Kitchen / Orders (Chef & Steward & Admin) -->
+      <div class="panel" id="panel-orders" style="grid-column: 1 / -1;">
+        <h3>Kitchen Orders</h3>
+        <p class="empty-msg" id="orders-loading">Loading orders...</p>
+        <div id="ordersList"
+          style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:15px;"></div>
+      </div>
+
+      <!-- Country Management -->
+      <div class="panel" id="panel-countries">
+        <h3>Countries</h3>
+        <div class="input-group admin-only">
+          <input type="text" id="newCountryName" placeholder="New Country Name" />
+          <button onclick="addCountry()">Add</button>
+        </div>
+        <ul id="countryList" class="list-group"></ul>
+      </div>
+
+      <!-- Category Management -->
+      <div class="panel" id="panel-categories">
+        <h3>Categories</h3>
+        <div class="input-group admin-only">
+          <input type="text" id="newCategoryName" placeholder="New Category Name" />
+          <button onclick="addCategory()">Add</button>
+        </div>
+        <ul id="categoryList" class="list-group"></ul>
+      </div>
+
+      <!-- Food Management -->
+      <div class="panel" id="panel-foods">
+        <h3>Food Items</h3>
+        <div class="form-grid chef-allow">
+          <input type="text" id="newFoodName" placeholder="Food Name" />
+          <input type="number" id="newFoodPrice" placeholder="Price" />
+          <select id="foodCountrySelect">
+            <option value="">Select Country</option>
+          </select>
+          <select id="foodCategorySelect">
+            <option value="">Select Category</option>
+          </select>
+          <button onclick="addFood()" class="full-width">Add Food Item</button>
+        </div>
+        <ul id="foodList" class="list-group"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= USER MANAGEMENT (Admin Only) ================= -->
+  <section id="users-mgmt" class="section hidden">
+    <div class="dashboard-header">
+      <h2>User Management</h2>
+      <p style="font-size:0.9rem; color:#666;">View and Manage Registered Users</p>
+    </div>
+    <div class="panel" id="panel-users-content" style="max-width: 800px; margin: 20px auto;">
+      <!-- User list injected here -->
+      <ul id="userList" class="list-group"></ul>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="section hidden">
+    <h2>Contact Us</h2>
+    <p>Email: <strong>restaurant@example.com</strong></p>
+    <p>Phone: +91 98765 43210</p>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    © 2026 Food Restaurant. All rights reserved.
+  </footer>
+
+  <!-- ================= CUSTOM CONFIRM MODAL ================= -->
+  <div id="confirmModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3 id="modalTitle">Confirm Action</h3>
+      <p id="modalMessage">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button id="btnCancel" class="btn-cancel">Cancel</button>
+        <button id="btnConfirm" class="btn-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CART MODAL ================= -->
+  <div id="cartModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Your Cart</h3>
+      <ul id="cartList" class="cart-list"
+        style="max-height: 250px; overflow-y: auto; text-align: left; margin: 15px 0; padding: 0; list-style: none;">
+      </ul>
+      <div class="cart-total"
+        style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 1px solid #eee; padding-top: 10px; margin-bottom: 20px;">
+        <span>Total:</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+
+      <div class="cart-actions">
+        <!-- Customer Name Selection -->
+        <div id="customerSelection" style="margin-bottom:15px; text-align:left;">
+          <label style="font-size:0.8rem; display:block; margin-bottom:5px; font-weight:600;">Customer Name (Order
+            For):</label>
+          <input type="text" id="orderForName" list="userListData" placeholder="Select or Type Name"
+            style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px;" />
+          <datalist id="userListData">
+            <!-- Populated by JS -->
+          </datalist>
+        </div>
+        <button onclick="openPayment()" class="btn-confirm" style="width:100%; margin-bottom:10px;">Proceed to
+          Pay</button>
+        <button onclick="closeCart()" class="btn-cancel" style="width:100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAYMENT MODAL ================= -->
+  <div id="paymentModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Select Payment Method</h3>
+      <div style="display:grid; gap:10px; margin-top:20px;">
+        <button onclick="processPayment('cash')" class="btn-pay cash">💵 Cash</button>
+        <button onclick="processPayment('card')" class="btn-pay card">💳 ATM Card</button>
+      </div>
+      <button onclick="closePayment()" class="btn-cancel" style="margin-top:15px; width:100%;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ================= FOOD DETAIL MODAL ================= -->
+  <div id="foodDetailModal" class="modal-overlay hidden">
+    <div class="modal-box" style="text-align:left;">
+      <h3 id="detailName" style="margin-bottom:5px;">Food Name</h3>
+      <p id="detailPrice" style="color:var(--primary); font-weight:600; margin-bottom:15px;">₹0</p>
+
+      <label style="display:block; margin-bottom:5px; font-size:0.9rem;">Quantity:</label>
+      <input type="number" id="detailQty" value="1" min="1"
+        style="width:100%; padding:8px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;" />
+
+
+
+      <div class="modal-actions" style="margin-top:20px;">
+        <button onclick="closeFoodDetail()" class="btn-cancel">Cancel</button>
+        <button onclick="confirmAddToOrder()" class="btn-confirm">Add to Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AUTH MODAL ================= -->
+  <div id="authModal" class="auth-overlay hidden">
+    <div class="auth-box">
+      <h2 id="authTitle">Login</h2>
+      <p id="authMessage">Welcome back, please login to your account.</p>
+
+      <div class="form-grid">
+        <input type="text" id="authUsername" placeholder="Username" />
+        <input type="password" id="authPassword" placeholder="Password" />
+
+        <!-- Role selection removed: All signups are users -->
+
+        <button id="authBtn" class="auth-btn" onclick="handleAuth()">Login</button>
+      </div>
+
+      <span class="toggle-link" onclick="toggleAuthMode()" id="authToggle">
+        Don't have an account? Sign Up
+      </span>
+      <span class="toggle-link" onclick="closeAuth()"
+        style="color:#888; margin-top:10px; font-size:0.8rem;">Close</span>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script src="app.js"></script>
+</body>
+
+</html>

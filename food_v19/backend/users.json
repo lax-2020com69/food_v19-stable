@@ -1,0 +1,42 @@
+[
+  {
+    "username": "admin",
+    "password": "123",
+    "role": "admin"
+  },
+  {
+    "username": "chef",
+    "password": "1234",
+    "role": "chef"
+  },
+  {
+    "username": "steward",
+    "password": "1234",
+    "role": "steward"
+  },
+  {
+    "username": "user1",
+    "password": "1234",
+    "role": "user"
+  },
+  {
+    "username": "user2",
+    "password": "1234",
+    "role": "user"
+  },
+  {
+    "username": "chef2",
+    "password": "1233",
+    "role": "chef"
+  },
+  {
+    "username": "chef3",
+    "password": "1233",
+    "role": "chef"
+  },
+  {
+    "username": "stward",
+    "password": "12345",
+    "role": "steward"
+  }
+]
